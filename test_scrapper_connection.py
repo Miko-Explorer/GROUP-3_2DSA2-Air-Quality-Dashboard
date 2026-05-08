@@ -38,7 +38,7 @@ print("Starting scrape...")
 # Scraping process:
 for city, url in urls_accu.items():
     response = requests.get(url, headers=headers)
-    time.sleep(5)
+    time.sleep(10)
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, "html.parser")
         pols_idx_divs = soup.find_all("div", class_="pollutant-index")
@@ -49,7 +49,7 @@ for city, url in urls_accu.items():
 
 for city, url in urls_pl.items():
     response = requests.get(url, headers=headers)
-    time.sleep(5)
+    time.sleep(10)
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, "html.parser")
         pols_idx_divs = soup.find_all("div", class_="pollutant-table__concentration")
