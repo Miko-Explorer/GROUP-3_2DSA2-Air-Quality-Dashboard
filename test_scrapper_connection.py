@@ -1,7 +1,6 @@
 import os
 import gspread
 import requests
-import time
 from bs4 import BeautifulSoup
 from datetime import datetime
 from oauth2client.service_account import ServiceAccountCredentials
