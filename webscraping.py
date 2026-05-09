@@ -5,8 +5,8 @@ import time
 urls = {"Caloocan": "https://www.accuweather.com/en/ph/caloocan/264875/air-quality-index/264875",
         "Las Piñas":"https://www.accuweather.com/en/ph/las-pi%C3%B1as/264877/air-quality-index/264877",
         "Makati":"https://www.accuweather.com/en/ph/makati-city/21-264878_1_al/air-quality-index/21-264878_1_al",
-        "Malabon": "https://www.accuweather.com/en/ph/barangay-660-a/3423800/air-quality-index/3423800",
-        "Mandaluyong": "https://www.accuweather.com/en/ph/javalera/772692/air-quality-index/772692",
+        "Malabon": "https://www.accuweather.com/en/ph/san-roque/761333/air-quality-index/761333",
+        "Mandaluyong": "https://www.accuweather.com/en/ph/mandaluyong/768148/air-quality-index/768148",
         "Manila": "https://www.accuweather.com/en/ph/manila/264885/air-quality-index/264885",
         "Marikina": "https://www.accuweather.com/en/ph/marikina-heights/1707180/air-quality-index/1707180",
         "Muntinlupa": "https://www.accuweather.com/en/ph/muntinlupa/264879/air-quality-index/264879",
@@ -20,10 +20,9 @@ urls = {"Caloocan": "https://www.accuweather.com/en/ph/caloocan/264875/air-quali
         "Taguig": "https://www.accuweather.com/en/ph/taguig/759349/air-quality-index/759349",
         "Valenzuela": "https://www.accuweather.com/en/ph/valenzuela/3424474/air-quality-index/3424474"}
 
-headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    "Accept-Language": "en-US,en;q=0.9",
-    "Referer": "https://www.google.com/"}
+headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+           "Accept-Language": "en-US,en;q=0.9",
+           "Referer": "https://www.google.com/"}
 
 cities = {}
 
