@@ -40,7 +40,7 @@ print("Starting scrape...")
 # Scraping process
 for city, url in urls.items():
     response = requests.get(url, headers=headers)
-    time.sleep(2)
+    time.sleep(3)
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, "html.parser")
         pols_idx_divs = soup.find_all("div", class_="pollutant-index")
