@@ -20,16 +20,14 @@ urls = {"Caloocan": "https://www.accuweather.com/en/ph/caloocan/264875/air-quali
         "Taguig": "https://www.accuweather.com/en/ph/taguig/759349/air-quality-index/759349",
         "Valenzuela": "https://www.accuweather.com/en/ph/valenzuela/3424474/air-quality-index/3424474"}
 
-headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-           "Accept-Language": "en-US,en;q=0.9",
-           "Referer": "https://www.google.com/"}
+headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
 
 cities = {}
 
 for city, url in urls.items():
     # Accessing the website
     response = requests.get(url, headers=headers) 
-    time.sleep(3)
+    time.sleep(2)
     if response.status_code == 200:
 
         # Parse the website
