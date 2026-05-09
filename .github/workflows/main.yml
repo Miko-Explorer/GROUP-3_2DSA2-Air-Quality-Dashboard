@@ -2,7 +2,6 @@ name: Air Quality Auto-Update
 on:
   schedule:
     - cron: '0 * * * *'
-      timezone: 'Asia/Manila'
   workflow_dispatch:  
 jobs:
   scrape:
