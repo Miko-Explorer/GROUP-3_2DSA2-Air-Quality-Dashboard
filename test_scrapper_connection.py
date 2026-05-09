@@ -10,11 +10,11 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 
 # Data are from AccuWeather
-urls = {"Caloocan": "https://www.accuweather.com/en/ph/caloocan/264875/air-quality-index/264875",
+    urls = {"Caloocan": "https://www.accuweather.com/en/ph/caloocan/264875/air-quality-index/264875",
         "Las Piñas":"https://www.accuweather.com/en/ph/las-pi%C3%B1as/264877/air-quality-index/264877",
         "Makati":"https://www.accuweather.com/en/ph/makati-city/21-264878_1_al/air-quality-index/21-264878_1_al",
-        "Malabon": "https://www.accuweather.com/en/ph/barangay-660-a/3423800/air-quality-index/3423800",
-        "Mandaluyong": "https://www.accuweather.com/en/ph/javalera/772692/air-quality-index/772692",
+        "Malabon": "https://www.accuweather.com/en/ph/san-roque/761333/air-quality-index/761333",
+        "Mandaluyong": "https://www.accuweather.com/en/ph/mandaluyong/768148/air-quality-index/768148",
         "Manila": "https://www.accuweather.com/en/ph/manila/264885/air-quality-index/264885",
         "Marikina": "https://www.accuweather.com/en/ph/marikina-heights/1707180/air-quality-index/1707180",
         "Muntinlupa": "https://www.accuweather.com/en/ph/muntinlupa/264879/air-quality-index/264879",
