@@ -26,8 +26,7 @@ cities = {}
 
 for city, url in urls.items():
     # Accessing the website
-    response = requests.get(url, headers=headers) 
-    time.sleep(2)
+    response = requests.get(url, headers=headers)
     if response.status_code == 200:
 
         # Parse the website
