@@ -24,32 +24,31 @@ def run_automation():
         return
 
     # --- 2. SCRAPING LOGIC ---
-    urls_pl = {"Caloocan": "https://air.plumelabs.com/air-quality-in-Caloocan%20City-7dun",
-               "Taguig": "https://air.plumelabs.com/air-quality-in-City%20of%20Taguig-74ag",
-               "Las Piñas": "https://air.plumelabs.com/air-quality-in-Las%20Pi%C3%B1as-7a74",
-               "Makati": "https://air.plumelabs.com/air-quality-in-Makati%20City-798t",
-               "Mandaluyong": "https://air.plumelabs.com/air-quality-in-Mandaluyong%20City-78L4",
-               "Manila": "https://air.plumelabs.com/air-quality-in-Manila-78Gg",
-               "Navotas": "https://air.plumelabs.com/air-quality-in-Navotas-77GC",
-               "Pasay": "https://air.plumelabs.com/air-quality-in-Pasay-76Qr",
-               "Pasig": "https://air.plumelabs.com/air-quality-in-Pasig-uAAa",
-               "Quezon City": "https://air.plumelabs.com/air-quality-in-Quezon%20City-76dq"}
-
-    urls_accu = {"Marikina": "https://www.accuweather.com/en/ph/marikina-heights/1707180/air-quality-index/1707180",
-                 "Malabon": "https://www.accuweather.com/en/ph/barangay-660-a/3423800/air-quality-index/3423800",
-                 "Muntinlupa": "https://www.accuweather.com/en/ph/muntinlupa/264879/air-quality-index/264879",
-                 "Paranaque": "https://www.accuweather.com/en/ph/don-bosco/3424484/air-quality-index/3424484",
-                 "Pateros": "https://www.accuweather.com/en/ph/pateros/764136/air-quality-index/764136",
-                 "San Juan": "https://www.accuweather.com/en/ph/san-juan/264882/air-quality-index/264882",
-                 "Valenzuela": "https://www.accuweather.com/en/ph/valenzuela/3424474/air-quality-index/3424474"}
+    urls = {"Caloocan": "https://www.accuweather.com/en/ph/caloocan/264875/air-quality-index/264875",
+        "Las Piñas":"https://www.accuweather.com/en/ph/las-pi%C3%B1as/264877/air-quality-index/264877",
+        "Makati":"https://www.accuweather.com/en/ph/makati-city/21-264878_1_al/air-quality-index/21-264878_1_al",
+        "Malabon": "https://www.accuweather.com/en/ph/barangay-660-a/3423800/air-quality-index/3423800",
+        "Mandaluyong": "https://www.accuweather.com/en/ph/javalera/772692/air-quality-index/772692",
+        "Manila": "https://www.accuweather.com/en/ph/manila/264885/air-quality-index/264885",
+        "Marikina": "https://www.accuweather.com/en/ph/marikina-heights/1707180/air-quality-index/1707180",
+        "Muntinlupa": "https://www.accuweather.com/en/ph/muntinlupa/264879/air-quality-index/264879",
+        "Navotas": "https://www.accuweather.com/en/ph/navotas/765956/air-quality-index/765956",
+        "Parañaque": "https://www.accuweather.com/en/ph/don-bosco/3424484/air-quality-index/3424484",
+        "Pasay": "https://www.accuweather.com/en/ph/pasay-city/2-264881_1_al/air-quality-index/2-264881_1_al",
+        "Pasig": "https://www.accuweather.com/en/ph/pasig/264876/air-quality-index/264876",
+        "Pateros": "https://www.accuweather.com/en/ph/pateros/764136/air-quality-index/764136",
+        "Quezon City": "https://www.accuweather.com/en/ph/quezon-city/264873/air-quality-index/264873",
+        "San Juan": "https://www.accuweather.com/en/ph/san-juan/264882/air-quality-index/264882",
+        "Taguig": "https://www.accuweather.com/en/ph/taguig/759349/air-quality-index/759349",
+        "Valenzuela": "https://www.accuweather.com/en/ph/valenzuela/3424474/air-quality-index/3424474"}
 
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     "Accept-Language": "en-US,en;q=0.9",
     "Referer": "https://www.google.com/"}
     cities = {}
 
-    # Scrape AccuWeather:
-    for city, url in urls_accu.items():
+    # Scrape
+    for city, url in urls_.items():
         response = requests.get(url, headers=headers)
         time.sleep(10)
         if response.status_code == 200:
@@ -62,22 +61,6 @@ def run_automation():
                     "PM10": int(float(pols_idx[2].strip())),
                     "O3": int(float(pols_idx[1].strip())),
                     "NO2": int(float(pols_idx[3].strip()))
-                }
-
-    # Scrape PlumeLabs:
-    for city, url in urls_pl.items():
-        response = requests.get(url, headers=headers)
-        time.sleep(10)
-        if response.status_code == 200:
-            soup = BeautifulSoup(response.text, "html.parser")
-            pols_idx_divs = soup.find_all("div", class_="pollutant-table__concentration")
-            pols_idx = [div.text for div in pols_idx_divs]
-            if len(pols_idx) >= 4:
-                cities[city] = {
-                    "PM2.5": int(float(pols_idx[0].strip())),
-                    "PM10": int(float(pols_idx[1].strip())),
-                    "O3": int(float(pols_idx[3].strip())),
-                    "NO2": int(float(pols_idx[2].strip()))
                 }
 
     # --- 3. PREPARE DATA (Separating Date and Time) ---
