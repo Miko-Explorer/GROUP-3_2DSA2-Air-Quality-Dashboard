@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import time
 
 urls = {"Caloocan": "https://www.accuweather.com/en/ph/caloocan/264875/air-quality-index/264875",
         "Las Piñas":"https://www.accuweather.com/en/ph/las-pi%C3%B1as/264877/air-quality-index/264877",
@@ -29,6 +30,7 @@ cities = {}
 for city, url in urls.items():
     # Accessing the website
     response = requests.get(url, headers=headers) 
+    time.sleep(3)
     if response.status_code == 200:
 
         # Parse the website
