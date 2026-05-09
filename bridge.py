@@ -48,7 +48,7 @@ def run_automation():
     cities = {}
 
     # Scrape
-    for city, url in urls_.items():
+    for city, url in urls.items():
         response = requests.get(url, headers=headers)
         time.sleep(10)
         if response.status_code == 200:
