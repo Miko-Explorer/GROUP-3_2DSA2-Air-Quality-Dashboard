@@ -5,7 +5,7 @@
 ---
 
 ## The Data Pipeline
-The project follows a "Serverless" architecture to ensure 24/7 updates without manual effor:
+The project follows a "Serverless" architecture to ensure 24/7 updates without manual effort:
 1. **Scrape:** Python scripts extract pollutant data (PM2.5, PM10, O3, NO2) from AccuWeather and PlumeLabs.
 2. **Automate:** Github Aactions triggers the script every hour.
 3. **Store:** The "Bridge" script overwrites a Google Sheet with cleaned, timestamped data.
