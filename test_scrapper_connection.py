@@ -1,17 +1,31 @@
 import os
+import json
 import gspread
 import requests
+import re
+import time
 from bs4 import BeautifulSoup
 from datetime import datetime
-from oauth2client.service_account import ServiceAccountCredentials
+from google.oauth2.service_account import Credentials
 
-# --- 1. YOUR ORIGINAL SCRAPING LOGIC ---
+def run_automation():
+    # --- 1. AUTHENTICATION (New Library - Local Only) ---
+    try:
+        scope = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
+        # Use the filename of your downloaded json key
+        creds = Credentials.from_service_account_file("creds.json", scopes=scope)
+        client = gspread.authorize(creds)
+        sheet = client.open("[DSA4154] Group 3 Scraped Data Output").sheet1
+        print("✅ Auth Success")
+    except Exception as e:
+        print(f"Authentication Error: {e}")
+        return
 
-
-# Data are from AccuWeather
-urls = {"Caloocan": "https://www.accuweather.com/en/ph/caloocan/264875/air-quality-index/264875",
-        "Las Piñas":"https://www.accuweather.com/en/ph/las-pi%C3%B1as/264877/air-quality-index/264877",
-        "Makati":"https://www.accuweather.com/en/ph/makati-city/21-264878_1_al/air-quality-index/21-264878_1_al",
+    # --- 2. SCRAPING LOGIC (Based on your original) ---
+    urls = {
+        "Caloocan": "https://www.accuweather.com/en/ph/caloocan/264875/air-quality-index/264875",
+        "Las Piñas": "https://www.accuweather.com/en/ph/las-pi%C3%B1as/264877/air-quality-index/264877",
+        "Makati": "https://www.accuweather.com/en/ph/makati-city/21-264878_1_al/air-quality-index/21-264878_1_al",
         "Malabon": "https://www.accuweather.com/en/ph/san-roque/761333/air-quality-index/761333",
         "Mandaluyong": "https://www.accuweather.com/en/ph/mandaluyong/768148/air-quality-index/768148",
         "Manila": "https://www.accuweather.com/en/ph/manila/264885/air-quality-index/264885",
@@ -25,44 +39,89 @@ urls = {"Caloocan": "https://www.accuweather.com/en/ph/caloocan/264875/air-quali
         "Quezon City": "https://www.accuweather.com/en/ph/quezon-city/264873/air-quality-index/264873",
         "San Juan": "https://www.accuweather.com/en/ph/san-juan/264882/air-quality-index/264882",
         "Taguig": "https://www.accuweather.com/en/ph/taguig/759349/air-quality-index/759349",
-        "Valenzuela": "https://www.accuweather.com/en/ph/valenzuela/3424474/air-quality-index/3424474"}
+        "Valenzuela": "https://www.accuweather.com/en/ph/valenzuela/3424474/air-quality-index/3424474"
+    }
 
-headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+    cities = {}
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
 
-cities = {}
-print("Starting scrape...")
+    for city, url in urls.items():
+        print(f"Scraping {city}...")
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.text, "html.parser")
 
-# Scraping process
-for city, url in urls.items():
-    response = requests.get(url, headers=headers)
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.text, "html.parser")
-        pols_idx_divs = soup.find_all("div", class_="pollutant-index")
-        pols_idx = [div.text for div in pols_idx_divs]
-        pols_idx = pols_idx[::2]
-        if len(pols_idx) >= 4:
-            cities[city] = {"PM2.5": int(float(pols_idx[0].strip())), "PM10": int(float(pols_idx[2].strip())), "O3": int(float(pols_idx[1].strip())), "NO2": int(float(pols_idx[3].strip()))}
+            # Find the pollutant indices
+            pols_idx_divs = soup.find_all("div", class_="pollutant-index")
 
-# --- 2. GSHEET CONNECTION LOGIC ---
-print("Connecting to Google Sheets...")
-scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("creds.json", scope)
-client = gspread.authorize(creds)
+            # Use original slicing logic but clean the text first
+            pols_texts = [div.get_text(strip=True) for div in pols_idx_divs]
 
-# Open your sheet (ensure name matches exactly)
-sheet = client.open("[DSA4154] Group 3 Scraped Data Output").sheet1
+            # Extract just the numbers to prevent "0" or "ValueError"
+            clean_indices = []
+            for t in pols_texts:
+                match = re.search(r'\d+', t)
+                clean_indices.append(int(match.group()) if match else 0)
 
-# --- 3. PREPARE AND OVERWRITE DATA ---
-timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-final_data = [["City", "Date / Time Scraped", "PM 2.5", "PM 10", "O3", "NO2"]]
+            # Slicing logic from your original bridge
+            pols_idx = clean_indices[::2]
 
-for city in sorted(cities.keys()):
-    data = cities[city]
-    final_data.append([city, timestamp, data["PM2.5"], data["PM10"], data["O3"], data["NO2"]])
+            if len(pols_idx) >= 4:
+                cities[city] = {
+                    "PM2.5": pols_idx[0],
+                    "PM10": pols_idx[1],
+                    "O3": pols_idx[3],
+                    "NO2": pols_idx[2]
+                }
 
-if len(final_data) > 1:
-    sheet.clear()
-    sheet.update(final_data, 'A1')
-    print(f"Success! Updated {len(final_data)-1} cities at {timestamp}.")
-else:
-    print("Error: No data was scraped.")
+            # Crucial: Website blocks you if you don't wait between requests
+            time.sleep(2)
+
+    # --- 3. PREPARE DATA ---
+
+    lats_longs = {"Caloocan": {"Latitude":14.6489905, "Longitude":120.985759},
+                  "Las Piñas": {"Latitude":14.4495367, "Longitude":120.9800033},
+                  "Makati": {"Latitude":14.5704593, "Longitude":121.0246962},
+                  "Malabon": {"Latitude":14.6576887, "Longitude":120.9483737},
+                  "Mandaluyong": {"Latitude":14.5777433, "Longitude":121.0311517},
+                  "Manila": {"Latitude":14.5895137, "Longitude":120.9790363},
+                  "Marikina": {"Latitude":14.6330712, "Longitude":121.0965852},
+                  "Muntinlupa": {"Latitude":14.3950501, "Longitude":121.0416651},
+                  "Navotas": {"Latitude":14.6580425, "Longitude":120.9452721},
+                  "Parañaque": {"Latitude":14.4705872, "Longitude":121.0196963},
+                  "Pasay": {"Latitude":14.5437, "Longitude":120.9922929,},
+                  "Pasig": {"Latitude":14.5596217, "Longitude":121.0786218},
+                  "Pateros": {"Latitude":14.5420872, "Longitude":121.0620681},
+                  "Quezon City": {"Latitude":14.6464639, "Longitude":121.0475227},
+                  "San Juan": {"Latitude":14.6050626, "Longitude":121.0269975},
+                  "Taguig": {"Latitude":14.528924, "Longitude":121.0673155},
+                  "Valenzuela": {"Latitude":14.528924, "Longitude":121.0673155}}
+
+    now = datetime.now()
+    day_str = now.strftime("%A")
+    date_str = now.strftime("%Y-%m-%d")
+    time_str = now.strftime("%H:%M:%S")
+    final_data = [["City / Municipality", "Date Scraped", "Day / Time Scraped", "Latitude", "Longitude", "PM 2.5", "PM 10", "O3", "NO2"]]
+
+    for city in sorted(cities.keys()):
+        data = cities[city]
+        final_data.append([
+            city,
+            date_str,
+            f"{day_str}, {time_str}",
+            str(lats_longs[city]["Latitude"]),
+            str(lats_longs[city]["Longitude"]),
+            data["PM2.5"],
+            data["PM10"],
+            data["O3"],
+            data["NO2"]
+        ])
+
+    # --- 4. OVERWRITE SHEET ---
+    if len(final_data) > 1:
+        sheet.clear()
+        sheet.update(final_data, 'A1')
+        print(f"✅ Success: {len(final_data) - 1} cities updated.")
+
+if __name__ == "__main__":
+    run_automation()
