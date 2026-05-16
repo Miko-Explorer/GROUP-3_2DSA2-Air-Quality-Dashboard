@@ -1,6 +1,6 @@
 Essential libraries to be loaded or installed in Python:
 - gspread
-- oauth2client
+- google-auth
 - requests
 - beautifulsoup4
 - os
