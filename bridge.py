@@ -51,10 +51,10 @@ def run_automation():
     }
 
     cities = {}
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0"}
 
     for city, url in urls.items():
-        print(f"Scraping {city}...", end=" ")
+        print(f"Scraping {city}...")
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
             soup = BeautifulSoup(response.text, "html.parser")
@@ -81,9 +81,7 @@ def run_automation():
                     "O3": pols_idx[3],
                     "NO2": pols_idx[2]
                 }
-                print("Successful!")
-            else:
-                print("Unsuccessful!")
+                
             # Crucial: Website blocks you if you don't wait between requests
             time.sleep(2)
 
