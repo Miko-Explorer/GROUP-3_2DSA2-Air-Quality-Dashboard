@@ -96,13 +96,13 @@ def run_automation():
                   "Muntinlupa": {"Latitude":14.3950501, "Longitude":121.0416651},
                   "Navotas": {"Latitude":14.6580425, "Longitude":120.9452721},
                   "Parañaque": {"Latitude":14.4705872, "Longitude":121.0196963},
-                  "Pasay": {"Latitude":14.5437, "Longitude":120.9922929},
+                  "Pasay": {"Latitude":14.5437, "Longitude":120.9922929,},
                   "Pasig": {"Latitude":14.5596217, "Longitude":121.0786218},
                   "Pateros": {"Latitude":14.5420872, "Longitude":121.0620681},
                   "Quezon City": {"Latitude":14.6464639, "Longitude":121.0475227},
                   "San Juan": {"Latitude":14.6050626, "Longitude":121.0269975},
                   "Taguig": {"Latitude":14.528924, "Longitude":121.0673155},
-                  "Valenzuela": {"Latitude":14.7000, "Longitude":120.9833}}
+                  "Valenzuela": {"Latitude":14.528924, "Longitude":121.0673155}}
 
     now = datetime.now()
     day_str = now.strftime("%A")
