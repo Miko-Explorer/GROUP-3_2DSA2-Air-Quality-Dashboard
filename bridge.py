@@ -102,7 +102,7 @@ def run_automation():
                   "Quezon City": {"Latitude":14.6464639, "Longitude":121.0475227},
                   "San Juan": {"Latitude":14.6050626, "Longitude":121.0269975},
                   "Taguig": {"Latitude":14.528924, "Longitude":121.0673155},
-                  "Valenzuela": {"Latitude":14.528924, "Longitude":121.0673155}}
+                  "Valenzuela": {"Latitude":14.6917229, "Longitude":120.9669678}}
 
     now = datetime.now()
     day_str = now.strftime("%A")
