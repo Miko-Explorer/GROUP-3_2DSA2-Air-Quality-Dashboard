@@ -1,6 +1,8 @@
 # GROUP-3_2DSA2-Air-Quality-Index-Dashboard
 **DSA4154 Group 3 - Automated AQI Monitoring System of 17 cities in Metro Manila Philippines**
-* This project provides a real-time data pipeline that scrapes Air Quality Index (AQI) data for 17 cities in Metro Manila. The data is processed via GitHub Actions, stored in Google Sheets, and visualized through a live Tableau Dashboard. To add, the project follows a "Serverless" architecture to ensure 24/7 updates without manual effort.
+* This project provides a real-time data pipeline that scrapes Air Quality Index (AQI) data for 17 cities in Metro Manila.
+* The data is processed via GitHub Actions, stored in Google Sheets, and visualized through a live Tableau Dashboard.
+* To add, the project follows a "Serverless" architecture to ensure 24/7 updates without manual effort.
 
 ---
 
