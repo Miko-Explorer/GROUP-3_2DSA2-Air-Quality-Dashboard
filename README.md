@@ -18,7 +18,8 @@
 ## Data Source (AccuWeather)
 **The prototype dashboard scrapes real‑time and forecast air quality data from** **[AccuWeather](https://www.accuweather.com/)**.  
 - AccuWeather provides hourly AQI values and pollutant concentrations for major cities worldwide.  
-- Our scraper targets the 17 cities of Metro Manila, extracting the following core pollutant measurements: **PM2.5**, **PM10**, **O3**, and **NO2**.  
+- Our scraper targets the 17 cities of Metro Manila, extracting the following core pollutant measurements:
+  * **PM2.5**, **PM10**, **O3**, and **NO2**.  
 - The data is updated every hour (via GitHub Actions) to maintain near‑real‑time accuracy for the dashboard.
 
 ---
