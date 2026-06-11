@@ -65,7 +65,7 @@ The automated script generates the following columns for the dashboard:
   - **O3 / NO2:** Ozone and Nitrogen Dioxide concentrations
  
 ---
-## 👥Group Members (Group #3)
+## 👥Group Members
 * **Benedict Caliba & Aaron Kane Dungca** - Lead Developer / Web Scraping
 * **Enrico Miguel Veloso** - Automation & API Integration
 * **Marcelo Cosme & Shane Hans Uyy** - Tableau Dashboard Design
