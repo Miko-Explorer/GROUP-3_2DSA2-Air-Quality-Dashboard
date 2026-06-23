@@ -5,7 +5,7 @@
 * To add, the project follows a "Serverless" architecture to ensure 24/7 updates without manual effort.
 
 ---
-## ⚙️ The Data Pipeline
+## The Data Pipeline
 **The project follows a "Serverless" architecture to ensure 24/7 updates without manual effort:**
 1. **Scrape:** Python scripts extract pollutant data (PM2.5, PM10, O3, NO2) from AccuWeather.
 2. **Automate:** GitHub Actions triggers the script every hour.
@@ -15,7 +15,7 @@
 4. **Visualize:** Tableau Desktop / Tableau Public.
 
 ---
-## ℹ️ Data Source (AccuWeather)
+## Data Source (AccuWeather)
 **The prototype dashboard scrapes real‑time and forecast air quality data from** **[AccuWeather](https://www.accuweather.com/)**.  
 - AccuWeather provides hourly AQI values and pollutant concentrations for major cities worldwide.  
 - Our scraper targets the 17 cities of Metro Manila, extracting the following core pollutant measurements:
@@ -23,7 +23,7 @@
 - The data is updated every hour (via GitHub Actions) to maintain near‑real‑time accuracy for the dashboard.
 
 ---
-## 💨 Key Pollutants: Definitions & Health Effects (Lethality)
+## Key Pollutants: Definitions & Health Effects (Lethality)
 * The dashboard tracks four pollutants that pose the greatest risk to human health. 
 * Below are their definitions and the potential lethality associated with acute or chronic exposure.
 
@@ -37,14 +37,14 @@
 > *Note*: Lethality is determined by both concentration and exposure duration. The AQI (Air Quality Index) thresholds (e.g., WHO guidelines) help predict when these pollutants become life‑threatening to sensitive or general populations.
 
 ---
-## 🛠️ Repository Structure
+## Repository Structure
 * `.github/workflows/main.yml`: The automation schedule (Cron job).
 * `bridge.py`: The main execution script that scrapes data and pushes to Google Sheets.
 * `requirements.txt`: List of Python dependencies for the GitHub runner.
 * `creds.json` (Stored in Secrets): Encrypted Google Service Account credentials.
 
 ---
-## ❓ How to Setup
+## How to Setup
 1. **GitHub Secrets:** Ensure the `GCP_SERVICE_ACCOUNT_KEY` is added to your repository secrets.
 2. **Google Sheets:** The target sheet must be shared with service account email as an **Editor**.
 3. **Tableau Connection:** Open Tableau.
@@ -53,7 +53,7 @@
    - Set the data to refresh to capture the hourly updates.
 
 ---
-## 📊 Output Schema
+## Output Schema
 The automated script generates the following columns for the dashboard:
 * **Columns:**
   - **City / Municipality:** The specific location in Metro Manila
@@ -65,11 +65,11 @@ The automated script generates the following columns for the dashboard:
   - **O3 / NO2:** Ozone and Nitrogen Dioxide concentrations
  
 ---
-## 👥 Group Members
+## Group Members
 * **Benedict Caliba & Aaron Kane Dungca** - Lead Developer / Web Scraping
 * **Enrico Miguel Veloso** - Automation & API Integration
 * **Marcelo Cosme & Shane Hans Uyy** - Tableau Dashboard Design
 
 ---
-## 🪪 License
+## License
 * Educational project for DSA#4154 (IPV).
